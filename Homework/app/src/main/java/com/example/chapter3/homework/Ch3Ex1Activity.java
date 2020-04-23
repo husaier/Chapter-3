@@ -1,14 +1,20 @@
 package com.example.chapter3.homework;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieProperty;
+import com.airbnb.lottie.model.KeyPath;
+import com.airbnb.lottie.value.LottieValueCallback;
 
 public class Ch3Ex1Activity extends AppCompatActivity {
+    private static final String Tag = "husaier";
     private LottieAnimationView animationView;
     private CheckBox loopCheckBox;
     private SeekBar seekBar;
@@ -21,6 +27,8 @@ public class Ch3Ex1Activity extends AppCompatActivity {
         animationView = findViewById(R.id.animation_view);
         loopCheckBox = findViewById(R.id.loop_checkbox);
         seekBar = findViewById(R.id.seekbar);
+        Log.d(Tag, "获取成功");
+
 
         loopCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -37,6 +45,8 @@ public class Ch3Ex1Activity extends AppCompatActivity {
             }
         });
 
+        loopCheckBox.setChecked(true);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -44,6 +54,11 @@ public class Ch3Ex1Activity extends AppCompatActivity {
                 // 提示1：可以参考 https://airbnb.io/lottie/#/android?id=custom-animators
                 // 提示2：SeekBar 的文档可以把鼠标放在 OnProgressChanged 中间，并点击 F1 查看，
                 // 或者到官网查询 https://developer.android.google.cn/reference/android/widget/SeekBar.OnSeekBarChangeListener.html#onProgressChanged(android.widget.SeekBar,%20int,%20boolean
+                if(fromUser)
+                {
+                    float cur = (float)progress / 100;
+                    animationView.setProgress(cur);
+                }
             }
 
             @Override
@@ -54,5 +69,6 @@ public class Ch3Ex1Activity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+        Log.d(Tag, "end");
     }
 }
